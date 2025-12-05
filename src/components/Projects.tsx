@@ -9,21 +9,18 @@ const projects = [
     description: "A custom 2D/3D game engine built from scratch. Because why use Unity when you can suffer?",
     tags: ["C++", "OpenGL", "Physics"],
     status: "In Progress",
-    gradient: "from-orange-500/20 to-red-500/20",
   },
   {
     title: "Physics Simulation",
     description: "Real-time fluid dynamics and particle systems. Very satisfying to watch, painful to debug.",
     tags: ["Rust", "WGPU", "Math"],
     status: "Concept",
-    gradient: "from-blue-500/20 to-cyan-500/20",
   },
   {
     title: "Multiplayer Game",
     description: "Fast-paced multiplayer racing game. Currently just cubes racing, but it's a start.",
     tags: ["Unity", "C#", "Networking"],
     status: "In Progress",
-    gradient: "from-purple-500/20 to-pink-500/20",
   },
 ];
 
@@ -76,15 +73,15 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
       onMouseLeave={handleMouseLeave}
       className="hoverable relative group"
     >
-      <div className={`glass rounded-2xl p-6 md:p-8 h-full relative overflow-hidden transition-all duration-300 group-hover:border-primary/30`}>
-        {/* Gradient background */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+      <div className="glass-soft frosted-border rounded-2xl p-6 md:p-8 h-full relative overflow-hidden transition-all duration-300 group-hover:border-primary/30">
+        {/* Soft gradient background on hover */}
+        <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         
-        {/* Shine effect */}
+        {/* Subtle shine effect */}
         <motion.div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
           style={{
-            background: "linear-gradient(105deg, transparent 40%, hsla(160, 100%, 50%, 0.1) 45%, transparent 50%)",
+            background: "linear-gradient(105deg, transparent 40%, hsla(185, 40%, 60%, 0.08) 45%, transparent 50%)",
             transform: "translateZ(0)",
           }}
         />
@@ -92,14 +89,14 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
         <div className="relative" style={{ transform: "translateZ(50px)" }}>
           {/* Status badge */}
           <div className="flex justify-between items-start mb-4">
-            <span className="text-xs font-mono px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
+            <span className="text-xs font-mono px-3 py-1 rounded-full bg-primary/10 text-primary frosted-border">
               {project.status}
             </span>
             <div className="flex gap-2">
-              <button className="p-2 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors">
+              <button className="p-2 rounded-lg bg-card/50 hover:bg-card/80 transition-colors frosted-border">
                 <Github className="w-4 h-4" />
               </button>
-              <button className="p-2 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors">
+              <button className="p-2 rounded-lg bg-card/50 hover:bg-card/80 transition-colors frosted-border">
                 <ExternalLink className="w-4 h-4" />
               </button>
             </div>
@@ -120,7 +117,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-xs font-mono px-2 py-1 rounded bg-secondary/50 text-muted-foreground"
+                className="text-xs font-mono px-2 py-1 rounded bg-card/50 text-muted-foreground frosted-border"
               >
                 {tag}
               </span>
@@ -146,11 +143,11 @@ const Projects = () => {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-border" />
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-border/50" />
           <h2 className="text-sm font-mono text-muted-foreground uppercase tracking-widest">
             Projects
           </h2>
-          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-border" />
+          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-border/50" />
         </motion.div>
 
         <motion.div
@@ -182,7 +179,7 @@ const Projects = () => {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 1 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-dashed border-border text-muted-foreground text-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full frosted-border bg-card/30 text-muted-foreground text-sm">
             <span className="w-2 h-2 bg-primary/50 rounded-full animate-pulse" />
             More projects loading...
           </div>

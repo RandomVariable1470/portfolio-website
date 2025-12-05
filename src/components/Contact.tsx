@@ -24,11 +24,11 @@ const Contact = () => {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-border" />
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-border/50" />
           <h2 className="text-sm font-mono text-muted-foreground uppercase tracking-widest">
             Contact
           </h2>
-          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-border" />
+          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-border/50" />
         </motion.div>
 
         <motion.div
@@ -49,7 +49,7 @@ const Contact = () => {
           {/* Contact form */}
           <motion.form
             onSubmit={handleSubmit}
-            className="glass rounded-2xl p-6 md:p-8"
+            className="glass-soft frosted-border rounded-2xl p-6 md:p-8"
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.4, duration: 0.6 }}
@@ -63,7 +63,7 @@ const Contact = () => {
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border/50 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                  className="w-full px-4 py-3 rounded-xl bg-card/50 frosted-border focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all text-sm"
                   placeholder="Your name"
                 />
               </div>
@@ -76,7 +76,7 @@ const Contact = () => {
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border/50 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                  className="w-full px-4 py-3 rounded-xl bg-card/50 frosted-border focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all text-sm"
                   placeholder="your@email.com"
                 />
               </div>
@@ -89,7 +89,7 @@ const Contact = () => {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={4}
-                  className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border/50 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all text-sm resize-none"
+                  className="w-full px-4 py-3 rounded-xl bg-card/50 frosted-border focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all text-sm resize-none"
                   placeholder="Tell me about your project..."
                 />
               </div>
@@ -98,7 +98,7 @@ const Contact = () => {
                 type="submit"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="hoverable w-full py-3 px-6 rounded-xl bg-primary text-primary-foreground font-medium flex items-center justify-center gap-2 hover:glow transition-all duration-300"
+                className="hoverable w-full py-3 px-6 rounded-xl bg-primary text-primary-foreground font-medium flex items-center justify-center gap-2 hover:glow-soft transition-all duration-300"
               >
                 <Send className="w-4 h-4" />
                 Send Message
@@ -114,7 +114,7 @@ const Contact = () => {
             transition={{ delay: 0.6, duration: 0.6 }}
           >
             {/* Quick contact */}
-            <div className="glass rounded-2xl p-6 md:p-8">
+            <div className="glass-soft frosted-border rounded-2xl p-6 md:p-8">
               <h4 className="font-medium mb-4 flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-primary" />
                 Quick Links
@@ -123,7 +123,7 @@ const Contact = () => {
               <div className="space-y-3">
                 <a
                   href="mailto:hello@randomvariable.dev"
-                  className="hoverable flex items-center gap-3 p-3 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-colors group"
+                  className="hoverable flex items-center gap-3 p-3 rounded-xl bg-card/40 hover:bg-card/60 transition-colors group frosted-border"
                 >
                   <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
                     <Mail className="w-4 h-4 text-primary" />
@@ -138,7 +138,7 @@ const Contact = () => {
                   href="https://github.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hoverable flex items-center gap-3 p-3 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-colors group"
+                  className="hoverable flex items-center gap-3 p-3 rounded-xl bg-card/40 hover:bg-card/60 transition-colors group frosted-border"
                 >
                   <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
                     <Github className="w-4 h-4 text-primary" />
@@ -153,7 +153,7 @@ const Contact = () => {
                   href="https://itch.io"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hoverable flex items-center gap-3 p-3 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-colors group"
+                  className="hoverable flex items-center gap-3 p-3 rounded-xl bg-card/40 hover:bg-card/60 transition-colors group frosted-border"
                 >
                   <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
                     <Gamepad2 className="w-4 h-4 text-primary" />
@@ -167,7 +167,7 @@ const Contact = () => {
             </div>
 
             {/* Fun message */}
-            <div className="glass rounded-2xl p-6 text-center">
+            <div className="glass-soft frosted-border rounded-2xl p-6 text-center">
               <p className="text-muted-foreground text-sm font-mono">
                 "I don't always respond immediately,<br />
                 but when I do, it's probably 3 AM."

@@ -22,7 +22,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="relative min-h-screen bg-premium text-foreground overflow-x-hidden">
       {/* Particle background */}
       <ParticleBackground />
       
@@ -41,11 +41,14 @@ const Index = () => {
         <Footer />
       </main>
 
-      {/* Soft gradient overlays for depth - white/teal tints */}
+      {/* Soft gradient overlays for depth */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-accent/3 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full h-96 bg-gradient-to-t from-accent/3 to-transparent" />
+        <div className="absolute top-0 left-0 w-full h-[50vh] bg-gradient-to-b from-background/50 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-96 bg-gradient-to-t from-background/80 to-transparent" />
       </div>
+
+      {/* Vignette overlay */}
+      <div className="fixed inset-0 pointer-events-none z-0 vignette" />
     </div>
   );
 };
