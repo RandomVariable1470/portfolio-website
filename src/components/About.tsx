@@ -17,17 +17,17 @@ const About = () => {
         >
           {/* Section title */}
           <div className="flex items-center gap-3 mb-12">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-border" />
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-border/50" />
             <h2 className="text-sm font-mono text-muted-foreground uppercase tracking-widest">
               About Me
             </h2>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-border" />
+            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-border/50" />
           </div>
 
           {/* Main content */}
-          <div className="glass rounded-2xl p-8 md:p-12 relative overflow-hidden">
-            {/* Decorative gradient */}
-            <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl" />
+          <div className="glass-soft frosted-border rounded-2xl p-8 md:p-12 relative overflow-hidden">
+            {/* Decorative gradient - soft teal */}
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-accent/10 rounded-full blur-3xl" />
             
             <div className="relative">
               <motion.p
@@ -60,7 +60,7 @@ const About = () => {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.6, duration: 0.6 }}
               >
-                <div className="flex items-start gap-3 p-4 rounded-xl bg-secondary/30 border border-border/30">
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-card/40 frosted-border">
                   <Code2 className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="font-medium text-sm text-foreground">Currently</h3>
@@ -70,7 +70,7 @@ const About = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-4 rounded-xl bg-secondary/30 border border-border/30">
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-card/40 frosted-border">
                   <Brain className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="font-medium text-sm text-foreground">Long-term</h3>
@@ -80,7 +80,7 @@ const About = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-4 rounded-xl bg-secondary/30 border border-border/30">
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-card/40 frosted-border">
                   <Sparkles className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="font-medium text-sm text-foreground">Philosophy</h3>

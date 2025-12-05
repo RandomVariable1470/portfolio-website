@@ -4,14 +4,14 @@ import { useRef } from "react";
 import { Users } from "lucide-react";
 
 const skills = [
-  { name: "C", icon: "C", color: "from-blue-500 to-blue-600" },
-  { name: "C++", icon: "C++", color: "from-blue-400 to-blue-600" },
-  { name: "Rust", icon: "🦀", color: "from-orange-500 to-red-600" },
-  { name: "Python", icon: "🐍", color: "from-yellow-400 to-green-500" },
-  { name: "JavaScript", icon: "JS", color: "from-yellow-400 to-yellow-500" },
-  { name: "TypeScript", icon: "TS", color: "from-blue-500 to-blue-700" },
-  { name: "C#", icon: "C#", color: "from-purple-500 to-purple-700" },
-  { name: "Unity", icon: "🎮", color: "from-gray-600 to-gray-800" },
+  { name: "C", icon: "C" },
+  { name: "C++", icon: "C++" },
+  { name: "Rust", icon: "🦀" },
+  { name: "Python", icon: "🐍" },
+  { name: "JavaScript", icon: "JS" },
+  { name: "TypeScript", icon: "TS" },
+  { name: "C#", icon: "C#" },
+  { name: "Unity", icon: "🎮" },
 ];
 
 const Skills = () => {
@@ -52,11 +52,11 @@ const Skills = () => {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-border" />
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-border/50" />
           <h2 className="text-sm font-mono text-muted-foreground uppercase tracking-widest">
             Skills
           </h2>
-          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-border" />
+          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-border/50" />
         </motion.div>
 
         <motion.h3
@@ -95,9 +95,9 @@ const Skills = () => {
               }}
               className="hoverable group relative"
             >
-              <div className="glass rounded-xl p-6 text-center relative overflow-hidden transition-all duration-300 group-hover:border-primary/30">
-                {/* Gradient background on hover */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+              <div className="glass-soft frosted-border rounded-xl p-6 text-center relative overflow-hidden transition-all duration-300 group-hover:border-primary/30">
+                {/* Soft gradient on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 
                 <div className="relative">
                   <span className="text-3xl mb-3 block">
@@ -127,7 +127,7 @@ const Skills = () => {
         >
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="hoverable glass rounded-full px-6 py-3 flex items-center gap-3 border border-primary/20"
+            className="hoverable glass-soft frosted-border rounded-full px-6 py-3 flex items-center gap-3"
           >
             <Users className="w-5 h-5 text-primary" />
             <span className="text-sm font-medium">Team Collaboration</span>
