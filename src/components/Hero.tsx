@@ -1,6 +1,16 @@
 import { motion } from "framer-motion";
 import { Github, Gamepad2, ChevronDown } from "lucide-react";
 import LocationPin from "./LocationPin";
+import TypingAnimation from "./TypingAnimation";
+
+const roles = [
+  "Game Developer",
+  "CS Enthusiast", 
+  "Curious Learner",
+  "Code Breaker",
+  "Physics Simulator",
+  "Bug Generator",
+];
 
 const Hero = () => {
   const scrollToAbout = () => {
@@ -62,15 +72,21 @@ const Hero = () => {
           <span className="text-foreground">Variable</span>
         </motion.h1>
 
-        {/* Tagline */}
-        <motion.p
-          className="text-lg md:text-xl text-muted-foreground mb-4 font-light tracking-wide"
+        {/* Tagline with typing animation */}
+        <motion.div
+          className="text-lg md:text-xl mb-4 font-light tracking-wide h-8 flex items-center justify-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8 }}
         >
-          Game Developer • Computer Science Enthusiast • Open to Learn
-        </motion.p>
+          <span className="text-muted-foreground">I'm a </span>
+          <TypingAnimation 
+            words={roles} 
+            typingSpeed={80} 
+            deletingSpeed={40} 
+            pauseDuration={2500} 
+          />
+        </motion.div>
 
         {/* Real name reveal */}
         <motion.p
