@@ -8,13 +8,16 @@ interface Particle {
   size: number;
   opacity: number;
   isTeal: boolean;
+  wobbleSpeed: number;
+  wobbleOffset: number;
 }
 
 const ParticleBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particles = useRef<Particle[]>([]);
-  const mousePos = useRef({ x: 0, y: 0 });
+  const mousePos = useRef({ x: -1000, y: -1000 });
   const animationRef = useRef<number>();
+  const timeRef = useRef(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -30,71 +33,87 @@ const ParticleBackground = () => {
 
     const initParticles = () => {
       particles.current = [];
-      const particleCount = Math.floor((canvas.width * canvas.height) / 18000);
+      const particleCount = Math.floor((canvas.width * canvas.height) / 12000);
       
       for (let i = 0; i < particleCount; i++) {
         particles.current.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.3,
-          vy: (Math.random() - 0.5) * 0.3,
-          size: Math.random() * 1.5 + 0.5,
-          opacity: Math.random() * 0.4 + 0.1,
-          isTeal: Math.random() > 0.7, // 30% teal accent particles
+          vx: 0,
+          vy: Math.random() * 0.3 + 0.1, // Slow downward drift
+          size: Math.random() * 2 + 0.5,
+          opacity: Math.random() * 0.35 + 0.1,
+          isTeal: Math.random() > 0.75, // 25% teal accent
+          wobbleSpeed: Math.random() * 0.02 + 0.01,
+          wobbleOffset: Math.random() * Math.PI * 2,
         });
       }
     };
 
     const animate = () => {
+      timeRef.current += 1;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      particles.current.forEach((particle, i) => {
-        // Update position
-        particle.x += particle.vx;
+      particles.current.forEach((particle) => {
+        // Gentle wobble side-to-side as they fall
+        const wobble = Math.sin(timeRef.current * particle.wobbleSpeed + particle.wobbleOffset) * 0.3;
+        
+        // Update position - falling down with wobble
+        particle.x += wobble + particle.vx;
         particle.y += particle.vy;
 
-        // Mouse interaction
+        // Mouse interaction - gentle push away
         const dx = mousePos.current.x - particle.x;
         const dy = mousePos.current.y - particle.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         
-        if (dist < 120) {
-          const force = (120 - dist) / 120;
-          particle.vx -= (dx / dist) * force * 0.015;
-          particle.vy -= (dy / dist) * force * 0.015;
+        if (dist < 100) {
+          const force = (100 - dist) / 100;
+          particle.vx -= (dx / dist) * force * 0.008;
+          particle.vy -= (dy / dist) * force * 0.004;
         }
 
-        // Boundary check
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+        // Dampen horizontal velocity
+        particle.vx *= 0.98;
+        
+        // Keep downward drift consistent
+        if (particle.vy < 0.1) particle.vy = 0.1;
+        if (particle.vy > 0.5) particle.vy = 0.5;
 
-        // Draw particle with soft white or teal tint
+        // Wrap around edges
+        if (particle.y > canvas.height + 10) {
+          particle.y = -10;
+          particle.x = Math.random() * canvas.width;
+        }
+        if (particle.x < -10) particle.x = canvas.width + 10;
+        if (particle.x > canvas.width + 10) particle.x = -10;
+
+        // Draw particle - soft glowing dot
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         
         if (particle.isTeal) {
-          ctx.fillStyle = `hsla(185, 35%, 65%, ${particle.opacity * 0.8})`;
+          // Teal accent particles with soft glow
+          const gradient = ctx.createRadialGradient(
+            particle.x, particle.y, 0,
+            particle.x, particle.y, particle.size * 2
+          );
+          gradient.addColorStop(0, `hsla(185, 40%, 70%, ${particle.opacity})`);
+          gradient.addColorStop(1, `hsla(185, 40%, 70%, 0)`);
+          ctx.fillStyle = gradient;
+          ctx.arc(particle.x, particle.y, particle.size * 2, 0, Math.PI * 2);
         } else {
-          ctx.fillStyle = `hsla(0, 0%, 85%, ${particle.opacity})`;
+          // White particles with soft glow
+          const gradient = ctx.createRadialGradient(
+            particle.x, particle.y, 0,
+            particle.x, particle.y, particle.size * 2
+          );
+          gradient.addColorStop(0, `hsla(0, 0%, 90%, ${particle.opacity})`);
+          gradient.addColorStop(1, `hsla(0, 0%, 90%, 0)`);
+          ctx.fillStyle = gradient;
+          ctx.arc(particle.x, particle.y, particle.size * 2, 0, Math.PI * 2);
         }
         ctx.fill();
-
-        // Draw connections with soft white/grey lines
-        particles.current.slice(i + 1).forEach((otherParticle) => {
-          const dx = particle.x - otherParticle.x;
-          const dy = particle.y - otherParticle.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 100) {
-            ctx.beginPath();
-            ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(otherParticle.x, otherParticle.y);
-            const lineOpacity = 0.06 * (1 - distance / 100);
-            ctx.strokeStyle = `hsla(0, 0%, 80%, ${lineOpacity})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        });
       });
 
       animationRef.current = requestAnimationFrame(animate);
@@ -102,6 +121,10 @@ const ParticleBackground = () => {
 
     const handleMouseMove = (e: MouseEvent) => {
       mousePos.current = { x: e.clientX, y: e.clientY };
+    };
+
+    const handleMouseLeave = () => {
+      mousePos.current = { x: -1000, y: -1000 };
     };
 
     resizeCanvas();
@@ -113,6 +136,7 @@ const ParticleBackground = () => {
       initParticles();
     });
     window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
       if (animationRef.current) {
@@ -120,6 +144,7 @@ const ParticleBackground = () => {
       }
       window.removeEventListener("resize", resizeCanvas);
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
 
